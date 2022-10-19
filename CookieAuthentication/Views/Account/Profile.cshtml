@@ -1,0 +1,57 @@
+﻿@{
+    ViewData["Title"] = "Profile";
+}
+<div class="row">
+    <div class="col-4 offset-4">
+        <h1 class="display-4 border-bottom text-center pb-2">@ViewData["Title"]</h1>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-4">
+        <div class="mb-4">
+            <div asp-validation-summary="All" class="text-danger small"></div>
+        </div>
+        <form method="post" asp-controller="Account" asp-action="ProfileChangeFullName">
+            <div class="form-group">
+                <label class="form-label small">İsim Soyisim</label>
+                <div class="input-group mb-3">
+                    <input name="fullname" type="text" class="form-control" placeholder="John Doe" value="@ViewData["FullName"]" />
+                    <button class="btn btn-secondary" type="submit"><i class="fa-solid fa-floppy-disk ms-2"></i>Kaydet</button>
+                </div>
+            </div>
+
+        </form>
+
+        <form method="post" asp-controller="Account" asp-action="ProfileChangePassword">
+            <div class="form-group">
+                <label class="form-label small">Yeni Şifre Tekrar</label>
+                <div class="input-group">
+                    <input name="password" type="password" class="form-control" placeholder="P@ssW0rd!" />
+                    <button class="btn btn-secondary" type="submit"><i class="fa-solid fa-floppy-disk ms-2"></i>Kaydet</button>
+                </div>
+
+                @if (ViewData["result"] != null && ViewData["result"] == "PasswordChanged")
+                {
+                    <span class="text-success small">Password güncellenmiştir.</span>
+                }
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@section Scripts{
+    @if (ViewData["result"] != null && ViewData["result"] == "FullNameChanged")
+    {
+        <script>
+            toastr["success"]("İsminiz değiştirilmiştir.", "Başarılı");
+        </script>
+    }
+    @if (ViewData["result"] != null && ViewData["result"] == "PasswordChanged")
+    {
+        <script>
+            toastr["success"]("Şifreniz değiştirilmiştir.", "Başarılı");
+        </script>
+    }
+}
